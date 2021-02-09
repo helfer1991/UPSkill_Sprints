@@ -1,6 +1,6 @@
 # Primeira iteração do projeto final do curso Upskill
 ## O projeto consiste na criação de um sistema que permita o match entre empresas e freelancers para a execução de tarefas
-*Há, nesta 1ª iteração, 3 atores (Administrador da plataforma, gestor de uma organização e respetivos colaboradores), cada um com as suas funcionalidades, conforme pode ser visto no diagrama de casos de uso e documentação de cada um deles.
+*Há, nesta 1ª iteração, 3 atores (Administrador da plataforma, gestor de uma organização e respetivos colaboradores), cada um com as suas funcionalidades, conforme pode ser visto no diagrama de casos de uso e documentação de cada um deles.*
 
 ## Grupo
 **Grupo constituído por:**
