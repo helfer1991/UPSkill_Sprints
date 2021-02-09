@@ -1,0 +1,83 @@
+@startuml
+autonumber
+'hide footbox
+actor "Administrativo" as ADM
+
+participant ":EspecificarCompetenciaTecnicaUI" as UI
+participant ":EspecificarCompetenciaTecnicaController" as CTRL
+participant ":Plataforma" as PLAT
+participant "rat:Registo\nAreasAtividade" as RAT
+participant "rct:RegistoCT" as RCT
+participant "ct\n:CompetenciaTecnica" as COMPETENCIA
+
+activate ADM
+ADM -> UI : inicia a especificação de uma competência técnica
+activate UI
+UI --> ADM : solicita os dados \n(código único, descrição breve e detalhada)
+deactivate UI
+
+ADM -> UI : introduz os dados solicitados
+activate UI
+
+UI -> CTRL : la=getAreasAtividade()
+activate CTRL
+
+CTRL -> PLAT : rat = getRegistoAreasAtividade()
+activate PLAT
+deactivate PLAT
+
+CTRL -> RAT : la=getAreasAtividade()
+activate RAT
+deactivate RAT
+
+UI --> ADM : mostra a lista de áreas de atividade e pede para selecionar uma
+deactivate CTRL
+deactivate UI
+
+ADM -> UI : seleciona uma área de atividade
+activate UI
+
+UI -> CTRL : novaCompetencia(cod,dsBreve,dsDet,atCod)
+activate CTRL
+
+CTRL -> RAT: at=getAreaAtividadeByCod(atCod)
+activate RAT
+deactivate RAT
+
+CTRL -> PLAT: rct=getRegistoCT()
+activate PLAT
+deactivate PLAT
+
+
+CTRL -> RCT: ct=novaCompetencia(cod,dsBreve,dsDet,at)
+activate RCT
+
+RCT --> COMPETENCIA**: create(cod,dsBreve,dsDet,at)
+deactivate RCT
+deactivate CTRL
+
+
+UI --> ADM : apresenta os dados e solicita confirmação
+deactivate PLAT
+deactivate CTRL
+deactivate UI
+
+ADM -> UI : confirma os dados
+activate UI
+UI -> CTRL : registaCompetencia()
+activate CTRL
+
+CTRL -> RCT : registaCompetencia(ct)
+activate RCT
+
+RCT -> RCT : validaCompetencia(ct)
+RCT -> RCT : addCompetencia(ct)
+
+UI --> ADM : informa do sucesso da operação
+deactivate RCT
+deactivate CTRL
+deactivate UI
+
+deactivate ADM
+
+@enduml

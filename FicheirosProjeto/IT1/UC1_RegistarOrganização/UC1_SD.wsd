@@ -1,0 +1,75 @@
+@startuml
+autonumber
+
+actor "Utilizador Não Registado" as UNR
+participant ":Registar\nOrganizacaoUI" as UI
+participant ":RegistarOrganizacao\nController" as CTRL
+participant ":Plataforma" as PLAT
+participant "ro:Registo\nOrganizacoes" as ORGS
+participant "Organizacao" as _ORG
+participant "org:Organizacao" as ORG
+participant "end:EnderecoPostal" as END
+participant "colab:Colaborador" as COLAB
+
+activate UNR
+UNR -> UI : registar organização
+activate UI
+UNR <- UI : solicita dados organização \n(nome,NIF, endereço, telefone, website, email)\n e sobre o gestor (nome, função, telefone, email)
+deactivate UI
+UNR -> UI : introduz os dados solicitados
+activate UI
+
+UI -> CTRL : novaOrganizacao(nome,NIF,endLocal,endCodPostal,\nendLocalidade,tlf,site,email,nomeG,função,tlfG, emailG)
+activate CTRL
+
+CTRL -> PLAT: ro = getRegistoOrganizacoes()
+activate PLAT
+deactivate PLAT
+
+CTRL -> ORGS: org = novaOrganizacao(nome,NIF,endLocal,endCodPostal,\nendLocalidade,tlf,site,email,nomeG,função,tlfG,emailG)
+activate ORGS
+
+ORGS -> _ORG: end=novoEndereco(endLocal,endCodPostal,endLocalidade)
+activate _ORG
+_ORG --> END ** : create(endLocal,endCodPostal,endLocalidade)
+deactivate _ORG
+
+ORGS -> _ORG: colab=novoColaborador(nomeG,função,tlfG, emailG)
+activate _ORG
+_ORG --> COLAB ** : create(nomeG,função,tlfG, emailG)
+deactivate _ORG
+
+ORGS --> ORG ** : create(nome,NIF,end,tlf,site,email,colab)
+deactivate ORGS
+
+CTRL -> ORGS : validaOrganizacao(org)
+activate ORGS
+deactivate ORGS
+
+deactivate CTRL
+UI --> UNR : apresenta dados e solicita confirmação
+deactivate UI
+
+UNR -> UI : confirma
+activate UI
+
+UI -> CTRL: registaOrganizacao()
+activate CTRL
+CTRL -> ORGS: registaOrganizacao(org)
+activate ORGS
+
+ORGS -> ORGS: validaOrganizao(org)
+
+ref over ORGS, COLAB, PLAT
+  UC1_SD_RegistarGestorComoUtilizador
+end ref
+
+ORGS -> ORGS: addOrganizao(org)
+deactivate ORGS
+
+deactivate CTRL
+UI --> UNR : operação bem sucedida
+deactivate UI
+
+deactivate UNR
+@enduml

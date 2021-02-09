@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="188.0" prefWidth="406.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.company.ui.AdicionarColaboradorUI">
+   <top>
+      <GridPane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="135.0" prefWidth="367.0" BorderPane.alignment="CENTER">
+        <columnConstraints>
+          <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" maxWidth="179.0" minWidth="10.0" prefWidth="177.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="201.0" minWidth="10.0" prefWidth="190.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="64.0" minHeight="10.0" prefHeight="64.0" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="96.0" minHeight="10.0" prefHeight="34.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <Label text="Nome: " />
+            <TextField fx:id="txtName" maxHeight="-Infinity" maxWidth="-Infinity" onKeyPressed="#txtNomeMaxSizeIsLetter" prefHeight="25.0" prefWidth="172.0" GridPane.columnIndex="1" />
+            <Label text="Email:  " GridPane.rowIndex="1" />
+            <Label prefHeight="28.0" prefWidth="60.0" text="Telefone:" GridPane.rowIndex="2" GridPane.valignment="TOP" />
+            <TextField fx:id="txtEmail" maxHeight="-Infinity" maxWidth="-Infinity" onKeyPressed="#txtEmailMaxSize" prefHeight="25.0" prefWidth="174.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <TextField fx:id="txtPhone" maxHeight="-Infinity" maxWidth="-Infinity" onKeyPressed="#txtPhoneMaxSizeisDigit" prefHeight="25.0" prefWidth="174.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+         </children>
+      </GridPane>
+   </top>
+   <bottom>
+      <FlowPane alignment="CENTER_RIGHT" columnHalignment="RIGHT" prefHeight="47.0" prefWidth="406.0" rowValignment="BASELINE" BorderPane.alignment="CENTER">
+         <children>
+            <Button defaultButton="true" mnemonicParsing="false" onAction="#actionAdicionarNovoColaborador" text="Adicionar Novo Colaborador">
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
+               <FlowPane.margin>
+                  <Insets right="10.0" />
+               </FlowPane.margin>
+            </Button>
+            <Button fx:id="btnCancel" alignment="CENTER" cancelButton="true" mnemonicParsing="false" onAction="#actionCancel" text="Cancelar">
+               <FlowPane.margin>
+                  <Insets right="3.0" />
+               </FlowPane.margin>
+            </Button>
+         </children>
+      </FlowPane>
+   </bottom>
+</BorderPane>

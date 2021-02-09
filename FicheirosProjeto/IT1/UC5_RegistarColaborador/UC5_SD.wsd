@@ -1,0 +1,81 @@
+@startuml
+autonumber
+
+actor "Gestor de Organização" as GEST
+participant ":EspecificarColaboradorUI" as UI
+participant ":EspecificarColaboradorController" as CTRL
+participant ":Plataforma" as PLAT
+participant "uAPI:\nUsersAPI" as UApi
+participant "ro:\nRegistoOrganizacoes" as RO
+participant "o:\nOrganizacao" as O
+participant "agp:\nAlgoritmoGeradorPasswords" as AGP
+participant "rc:\nRepositorioColaborador" as RC
+participant "c:\nColaborador" as COLAB
+
+activate GEST
+GEST -> UI : começa o processo de registo de um colaborador
+activate UI
+
+UI --> GEST : solicita os dados requeridos sobre o mesmo\n (nome, funcao, contacto, email)
+deactivate UI
+
+GEST -> UI : insere os dados do novo colaborador
+activate UI
+UI -> CTRL : novoColaborador(nome,funcao,contacto,email)
+activate CTRL
+CTRL -> PLAT : plat = Plataforma.getInstance()
+activate PLAT
+deactivate PLAT
+CTRL -> UApi : uAPI = plat.getUsersAPI()
+activate UApi
+CTRL -> UApi: email = getEmailUtilizador()
+deactivate UApi
+CTRL -> PLAT : ro = plat.getRegistoOrganizacao()
+activate PLAT
+PLAT -> RO: o = getOrganizacaoByEmailUtilizador(email)
+deactivate PLAT
+activate RO 
+CTRL -> O : rc = o.getRepositorioColaborador()
+deactivate RO
+activate O
+O -> RC : c = novoColaborador(nome,funcao,contacto,email)
+deactivate O
+activate RC 
+RC --> COLAB **: create(nome,funcao,contacto,email)
+deactivate RC
+UI --> GEST : valida os dados introduzidos, apresenta-os e solicita a confirmação
+deactivate O
+deactivate PLAT
+deactivate UI
+deactivate CTRL
+GEST -> UI : confirma
+activate UI
+UI -> CTRL: registaColaborador()
+activate CTRL
+
+CTRL -> COLAB : nome = getNome()
+activate COLAB
+CTRL -> COLAB : email = getEmail()
+deactivate COLAB
+CTRL -> AGP : password = geraPassword()
+activate AGP
+deactivate AGP
+CTRL -> RC: registaColaborador(funcao,c)
+activate RC
+RC -> RC : validaColaborador(C)
+RC --> UApi : RegisterUserWithRoles(nome,email,password,funcao)
+deactivate RC
+activate UApi
+UApi -> RC: registado
+deactivate UApi
+activate RC
+RC -> RC: addColaborador(c)
+RC --> CTRL : adicionado com sucesso
+deactivate RC
+deactivate UApi
+CTRL --> UI: adicionado com sucesso
+deactivate CTRL
+UI --> GEST: regista os dados do colaborador, gera-lhe uma password \n(enviando, por email, os dados de acesso ao colaborador) \ne informa o gestor de organização do sucesso da operação
+deactivate UI
+
+@enduml

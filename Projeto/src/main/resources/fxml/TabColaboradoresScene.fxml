@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="544.0" prefWidth="804.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.company.ui.TabColaboradoresSceneUI">
+   <center>
+      <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+         <children>
+            <GridPane prefHeight="544.0" prefWidth="804.0">
+              <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints maxHeight="512.0" minHeight="10.0" prefHeight="511.0" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="195.0" minHeight="10.0" prefHeight="33.0" vgrow="SOMETIMES" />
+              </rowConstraints>
+               <children>
+                  <Button defaultButton="true" mnemonicParsing="false" onAction="#actionAdicionarNovoColaborador" text="Adicionar Novo Colaborador" GridPane.halignment="RIGHT" GridPane.rowIndex="1">
+                     <GridPane.margin>
+                        <Insets right="10.0" />
+                     </GridPane.margin>
+                  </Button>
+                  <TableView fx:id="tableViewColaboradores" prefHeight="200.0" prefWidth="200.0">
+                    <columns>
+                      <TableColumn fx:id="tableViewColaboradoresNome" prefWidth="260.0" text="Nome" />
+                        <TableColumn fx:id="tableViewColaboradoresEmail" prefWidth="374.0" text="Email" />
+                      <TableColumn fx:id="tableViewColaboradoresTelefone" prefWidth="169.0" text="Telefone" />
+                    </columns>
+                  </TableView>
+               </children>
+            </GridPane>
+         </children>
+      </AnchorPane>
+   </center>
+</BorderPane>

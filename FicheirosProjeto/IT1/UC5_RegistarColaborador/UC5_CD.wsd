@@ -1,0 +1,87 @@
+@startuml
+skinparam classAttributeIconSize 0
+
+class EspecificarColaboradorUI {
+}
+
+class EspecificarColaboradorController {
+  +novoColaborador(nome, funcao, contacto, email)
+}
+
+class Plataforma {
+  -String designacao
+  +getUsersAPI()
+  +getRegistoOrganizacao()
+  +getAlgoritmoGeradorPasswords()
+  +getGestaoUtilizadoresFacade()
+}
+
+class UsersAPI{
+  +getEmail();
+}
+
+class RegistoOrganizacoes {
+  +getOrganizacaoByEmailUtilizador(email)
+}
+
+class Organizacao {
+  +novoColaborador(nome, funcao, contacto, email)
+  +getRepositorioColaborador()
+}
+
+class Colaborador {
+  -String nome
+  -String funcao
+  -String telefone
+  -String email
+  +Colaborador(nome, funcao, contacto, email)
+  +getEmail()
+  +getNome()
+}
+
+class Organizacao {
+  -String nome
+  -String NIF
+  -String website
+  -String telefone
+  -String email
+  +getOrganizacao()
+  +validaColaborador(c)
+}
+
+class UsersAPI {
+  +getEmailUtilizador()
+  +RegisterUserWithRoles(nome,telefone,email)
+}
+
+class RepositorioColaborador {
+  +novoColaborador(nome,telefone,email)
+  +validaColaborador
+  +addColaborador
+}
+
+interface AlgoritmoGeradorPasswords{
+  +geraPassword()
+}
+
+
+EspecificarColaboradorUI ..> EspecificarColaboradorController
+
+EspecificarColaboradorController ..> UsersAPI
+EspecificarColaboradorController ..> Plataforma
+EspecificarColaboradorController ..> RepositorioColaborador
+EspecificarColaboradorController ..> RegistoOrganizacoes
+EspecificarColaboradorController ..> Organizacao
+EspecificarColaboradorController ..> Colaborador
+
+RegistoOrganizacoes "1" -l> "*" Organizacao : possui
+
+Organizacao "1" --u> "1..*" Colaborador : possui
+Organizacao "1" --u> "1" RepositorioColaborador : possui
+RepositorioColaborador ..> AlgoritmoGeradorPasswords
+RegistoOrganizacoes ..> Plataforma
+
+
+
+
+@enduml

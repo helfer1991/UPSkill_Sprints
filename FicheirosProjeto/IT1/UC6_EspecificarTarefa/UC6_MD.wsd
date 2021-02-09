@@ -1,0 +1,53 @@
+@startuml
+
+left to right direction
+
+class Plataforma {
+    -designacao
+}
+
+class Organização {
+    -nome
+    -nif
+    -website
+    -telefone
+    -email
+}
+
+class Colaborador {
+    -nome
+    -funcao
+    -telefone
+    -email
+}
+
+class Utilizador{
+    -nome
+    -email
+    -password
+}
+
+class Tarefa {
+    -referencia
+    -designacao
+    -descInformal
+    -descTecnica
+    -estimativaDuracao
+    -estimativaCusto
+}
+
+class Categoria {
+    -id
+    -descricao
+}
+
+
+    Plataforma "1" -- "*" Organização:tem registadas >
+    Plataforma "1" -- "*" Categoria:possui >
+    Organização "1" -- "*" Tarefa: possui >
+    Organização "1" -- "1..*" Colaborador:tem >
+    Colaborador "0..1" -- "1" Utilizador:atua como >
+    Colaborador "1" -- "*" Tarefa:especificada por <
+    Tarefa "*" -- "1" Categoria:enquadra-se em >
+
+@enduml

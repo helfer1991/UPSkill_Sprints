@@ -1,0 +1,78 @@
+@startuml
+skinparam classAttributeIconSize 0
+
+class Colaborador {
+  -String nome
+  -String funcao
+  -String telefone
+  -String email
+  +Colaborador(nome,função,tlf, email)
+  +String getNome()
+  +String getEmail()
+}
+
+class EnderecoPostal {
+  -String local
+  -String codPostal
+  -String localidade
+  +EnderecoPostal(local,codPostal,localidade)
+}
+
+class Organizacao {
+  -String nome
+  -String NIF
+  -String website
+  -String telefone
+  -String email
+  +Organizacao(nome, NIF,webSite,telefone, email,endereco,gestorColaborador)
+  +{static} EnderecoPostal novoEndereco(local,codPostal,localidade)
+  +{static} Colaborador novoColaborador(nome,funcao,tlf, email)
+}
+
+class Plataforma {
+  -String designacao
+  + RegistoOrganizacoes getRegistoOrganizacoes()
+  + AutorizacaoFacade getAutorizacaoFacade()
+  + AlgoritmoGeradorPasswords getAlgoritmoGeradorPwd()
+}
+
+class RegistoOrganizacoes {
+  +Organizacao novaOrganizacao(nome,NIF,endLocal,endCodPostal,\nendLocalidade,tlf,site,email,nomeG,função,tlfG, emailG)
+  +validaOrganizacao(Organizacao org)
+  +registaOrganizacao(Organizacao org)
+  -addOrganizacao(Organizacao org)
+  -registaGestorComoUtilizador(Colaborador colab)
+  -enviaPwd(String emailG, String pwd)
+}
+
+class UserAPIAdapter {
+   +registerUserWithRoles(nomeG,emailG,pwd,listaPapel)
+}
+
+interface AlgoritmoGeradorPasswords <<interface>>{
+   +String geraPassword(String nomeG, String emailG)
+}
+
+class RegistarOrganizacaoController {
+    +novaOrganizacao(nome,NIF,endLocal,endCodPostal,endLocalidade,tlf,site,email,nomeG,função,tlfG, emailG,pwd)
+    +registaOrganizacao()
+}
+
+class RegistarOrganizacaoUI {
+}
+
+RegistarOrganizacaoUI ..> RegistarOrganizacaoController
+RegistarOrganizacaoController ..> Plataforma
+RegistarOrganizacaoController ..> RegistoOrganizacoes
+RegistarOrganizacaoController ..> Organizacao
+
+RegistoOrganizacoes "1" --> "*" Organizacao : tem registadas
+RegistoOrganizacoes ..> Colaborador
+RegistoOrganizacoes ..> EnderecoPostal
+RegistoOrganizacoes ..> UserAPIAdapter
+RegistoOrganizacoes ..> AlgoritmoGeradorPasswords
+Organizacao "1" --> "1..*" Colaborador: tem
+Organizacao "1" --> "1" Colaborador: tem gestor
+Organizacao "1" --> "1" EnderecoPostal: localizada em
+
+@enduml

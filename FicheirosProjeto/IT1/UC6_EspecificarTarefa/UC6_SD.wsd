@@ -1,0 +1,111 @@
+@startuml
+autonumber
+actor "Colaborador" as Colab
+
+participant ": UI" as UI
+participant ": Controller" as CTRL
+participant ": Plataforma" as PLAT
+participant "rc: ListaCategoriasTarefa" as Cat
+participant "ro: RegistoOrganizacoes" as RO
+participant "rt: ListaTarefas" as RT
+participant "o: Organizacao" as O
+participant "rc: RepositorioColaborador" as RC
+participant "t: Tarefa" as TAREFA
+
+activate Colab
+Colab -> UI : Inicia a especificação de uma tarefa
+
+activate UI
+UI -> CTRL : listd = getListaCatTarefaIdDesc()
+
+activate CTRL
+CTRL -> O : getRegistoListaTarefas()
+activate O
+deactivate O
+
+CTRL -> Cat : getListaCat()
+activate Cat
+deactivate Cat
+
+deactivate CTRL
+
+UI --> Colab : Solicita os dados
+deactivate UI
+
+Colab -> UI : Introduz os dados
+activate UI
+
+UI -> CTRL : novaTarefa(String ref, String designacao, \nString descrInformal, String descrTecnica, \nInteger duracaoEst, Double custoEst, \nCategoriaTarefa catTarefa, Colaborador colab)
+activate CTRL
+
+'ref over RC , RO, CTRL'
+group ref
+        CTRL -> CTRL : email = getMyEmail()
+end
+
+CTRL -> PLAT : getRo()
+activate PLAT
+deactivate PLAT
+
+CTRL -> RO : getOrganizacaoByEmailUtilizador(email)
+activate RO
+deactivate RO
+
+CTRL -> O : getRegistoListaTarefas()
+activate O
+deactivate O
+
+CTRL -> RT : getLista()
+activate RT
+deactivate RT
+
+CTRL -> PLAT : getListaCategoriaTarefa()
+activate PLAT
+deactivate PLAT
+
+CTRL -> Cat : getListaCat()
+activate Cat
+deactivate Cat
+
+CTRL -> Cat : getCategoriaTarefaById(String strId)
+activate Cat
+deactivate Cat
+
+CTRL -> O : getRepositorioColaborador()
+activate O
+deactivate O
+
+CTRL -> RC : getColaboradorByEmail(email)
+activate RC
+deactivate RC
+
+CTRL -> RT : t = novaTarefa(ref, designacao, descrInformal, descrTecnica, duracaoEst, custoEst, catTarefa, colab)
+activate RT
+
+RT --> TAREFA** : create(ref, designacao, descrInformal, descrTecnica, duracaoEst, custoEst, catTarefa, colab)
+
+RT -> RT : valida(t)
+deactivate RT
+deactivate CTRL
+
+UI --> Colab : Apresenta os dados e solicicta confirmação
+deactivate UI
+ 
+Colab -> UI : Confirma
+activate UI
+
+UI -> CTRL : novaTarefa()
+activate CTRL
+
+CTRL -> RT : getRegistoListaTarefas()
+activate RT
+
+RT -> RT : valida(t)
+RT -> RT : addTarefa(t)
+
+UI --> Colab : Informa operação bem sucedida
+
+deactivate UI
+deactivate Colab
+
+@enduml

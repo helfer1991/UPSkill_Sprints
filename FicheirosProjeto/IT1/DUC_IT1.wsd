@@ -1,0 +1,24 @@
+@startuml
+
+left to right direction
+
+actor Administrativo AS a
+actor Gestor AS g
+actor Colaborador AS c
+actor Utilizador_Não_Registado AS u
+
+usecase "UC1 - Registar Organização" AS UC1
+usecase "UC2 - Definir Área de Atividade" AS UC2
+usecase "UC3 - Definir Categoria de Tarefa" AS UC3
+usecase "UC4 - Registar Competência Técnica" AS UC4
+usecase "UC5 - Registar Colaborador" AS UC5
+usecase "UC6 - Especificar Tarefa" AS UC6
+
+u --> UC1
+a --> UC2
+a --> UC3 
+a --> UC4
+g --> UC5 
+c --> UC6
+
+@enduml

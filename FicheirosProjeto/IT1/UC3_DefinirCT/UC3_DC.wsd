@@ -1,0 +1,55 @@
+@startuml
+skinparam classAttributeIconSize 0
+
+class DefinirCategoriaTarefaUI {
+}
+
+class DefinirCategoriaTarefaController {
+  +ListaAreasAtividade getListaAreasAtividade()
+  +RegistoCompetenciasTecnicas getListaCompetenciasTecnicas()
+  +addCompTecnicaToList(CompetenciaTecnica ct , Boolean caraterct)
+  +novaCategoria(String descricao, AreaAtividade oArea, HashMap<CompetenciaTecnica,Boolean> lcompTecCT)
+  +registaCategoriaTarefa()
+}
+
+class Plataforma {
+  +ListaAreasAtividade getLat()
+  +RegistoCompetenciasTecnicas getRct()
+}
+
+class ListaAreasAtividade {
+  +ArrayList<AreaAtividade> getLat()
+}
+
+class RegistoCompetenciasTecnicas {
+  +ArrayList<CompetenciaTecnica> getListaCompTec()
+}
+
+class ListaCategoriasTarefa {
+    +CategoriaTarefa novaCategoriaTarefa(String descricao, AreaAtividade oArea, HashMap<CompetenciaTecnica,Boolean> lcompTecCT)
+    +registaCategoriaTarefa(CategoriaTarefa oCatTarefa)
+    -validaCategoriaTarefa(CategoriaTarefa oCatTarefa)
+    -addCategoriaTarefa(CategoriaTarefa oCatTarefa)
+}
+
+class CategoriaTarefa {
+  -String idCategoria
+  -String descricao
+  -AreaAtividade oArea
+  -HashMap <CompetenciaTecnica, Boolean> listCompTec
+  +CategoriaTarefa(String descricao, AreaAtividade oArea, HashMap<CompetenciaTecnica, Boolean> listCompTec)
+  +setIdCategoria(String idCategoria)
+  }
+
+
+DefinirCategoriaTarefaUI ..> DefinirCategoriaTarefaController
+DefinirCategoriaTarefaController ..> Plataforma
+DefinirCategoriaTarefaController ..> ListaAreasAtividade
+DefinirCategoriaTarefaController ..> RegistoCompetenciasTecnicas
+DefinirCategoriaTarefaController ..> ListaCategoriasTarefa
+ListaCategoriasTarefa "1" --> "*" CategoriaTarefa : possui
+Plataforma "1" --> "1" ListaAreasAtividade : tem
+Plataforma "1" --> "1" ListaCategoriasTarefa : tem
+Plataforma "1" --> "1" RegistoCompetenciasTecnicas : tem
+
+@enduml

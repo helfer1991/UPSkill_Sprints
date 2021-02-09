@@ -1,0 +1,74 @@
+@startuml
+skinparam classAttributeIconSize 0
+
+class EspecificarTarefaUI {
+}
+
+class EspecificarTarefaController {
+  -ArrayList<String> getListaCatTarefaIdDesc()
+  -novaTarefa(String ref, String designacao, String descrInformal,
+            String descrTecnica, Integer duracaoEst, Double custoEst, CategoriaTarefa catTarefa, Colaborador colab)
+  -novaTarefa()
+}
+
+class Plataforma {
+  -RegistoOrganizacoes getRo()
+  -ListaCategoriasTarefa getListaCategoriaTarefa()
+}
+
+class ListaCategoriasTarefa {
+  -ArrayList<CategoriaTarefa> getListaCat()
+  -CategoriaTarefa getCategoriaTarefaById(String strId)
+  }
+
+class RegistoOrganizacoes {
+  -Organizacao getOrganizacaoByEmailUtilizador(String email)
+}
+
+class ListaTarefas {
+    -ListaTarefas getLista()
+    -Tarefa novaTarefa(String ref, String designacao, String descrInformal, \nString descrTecnica, Integer duracaoEst, Double custoEst, CategoriaTarefa catTarefa, Colaborador colab)
+    -validaTarefa(Tarefa t)
+    -ListaTarefas getRegistoListaTarefas()
+    -addTarefa(Tarefa t)
+}
+
+class Organizacao {
+  -ListaTarefas getRegistoListaTarefas()
+  -RepositorioColaborador getRepositorioColaborador()
+}
+
+class RepositorioColaborador {
+  -Colaborador getColaboradorByEmail(email)
+}
+
+  class Tarefa {
+  -String ref
+  -String designacao
+  -String descrInformal
+  -String descrTecnica
+  -Integer duracaoEst
+  -Double custoEst
+  -CategoriaTarefa catTarefa
+  -Colaborador colab
+  +Tarefa(String ref, String designacao, String descrInformal, String descrTecnica,
+            Integer duracaoEst, Double custoEst, CategoriaTarefa catTarefa, Colaborador colab)
+  }
+
+
+EspecificarTarefaUI ..> EspecificarTarefaController
+EspecificarTarefaController ..> Plataforma
+EspecificarTarefaController ..> ListaTarefas
+EspecificarTarefaController ..> ListaCategoriasTarefa
+EspecificarTarefaController ..> RegistoOrganizacoes
+EspecificarTarefaController ..> RepositorioColaborador
+EspecificarTarefaController ..> Organizacao
+Plataforma "1" --> "1" ListaTarefas
+Plataforma "1" --> "1" ListaCategoriasTarefa
+Plataforma "1" --> "1" RegistoOrganizacoes
+Plataforma "1" --> "1" RepositorioColaborador
+ListaTarefas "1" --> "1" Tarefa : possui
+RegistoOrganizacoes "1" --> "*" Organizacao : possui
+Organizacao "1" --> "1" ListaTarefas
+
+@enduml

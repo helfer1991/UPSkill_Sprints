@@ -1,0 +1,102 @@
+@startuml
+autonumber
+actor "Administrativo" as Admin
+
+participant ": UI" as UI
+participant ": Controller" as CTRL
+participant ": Plataforma" as PLAT
+participant "lat: ListaAreasAtividade" as RAT 
+participant "rct: RegistoCompetenciasTecnicas" as RCT
+participant "lct: ListaCategoriasTarefa" as RC
+participant "c: CategoriaTarefa" as CAT
+
+activate Admin
+Admin -> UI : Inicia definição de nova categoria de tarefa
+activate UI
+
+UI -> CTRL : lat = getListaAreasAtividade()
+activate CTRL
+
+CTRL -> PLAT : lat = getLat()
+activate PLAT
+deactivate PLAT
+
+CTRL -> RAT : la = getLat()
+activate RAT
+deactivate RAT
+
+deactivate CTRL
+
+UI --> Admin : Mostra lista de áreas de atividade e solicita \na descrição da categoria de tarefa e a escolha \nde uma área de actividade
+deactivate UI
+
+Admin -> UI : Introduz a descrição e seleciona a área de atividade pretendida
+activate UI
+
+UI -> CTRL :rct = getListaCompetenciasTecnicas()
+activate CTRL
+
+CTRL -> PLAT : rct = getRct()
+activate PLAT
+deactivate PLAT
+
+CTRL -> RCT : rct = getListaCompTec()
+activate RCT
+deactivate RCT
+deactivate CTRL
+
+UI --> Admin : Mostra a lista de competências técnicas associada \n à área de atividade especificada e solicita a escolha das mesmas
+deactivate UI
+
+
+loop
+
+Admin -> UI : Seleciona a competência técnica e a obrigatoriedade da mesma
+activate UI
+
+UI -> CTRL : addCompTecnicaToList(ct, obrigatoriedade)
+activate CTRL
+
+CTRL -> CTRL : lcompTec = put(ct, caraterct)
+deactivate CTRL
+
+UI --> Admin : Apresenta dados
+deactivate UI
+
+end loop
+
+Admin -> UI : Confirma
+activate UI
+
+UI -> CTRL : c = novaCategoria(String descricao, AreaAtividade oArea, HashMap<CompetenciaTecnica,Boolean> lcompTecCT)
+activate CTRL
+
+CTRL -> RC : novaCategoriaTarefa(descricao, oArea, lcompTecCT)
+activate RC
+
+RC --> CAT** : create(descricao, oArea, lcompTecCT)
+
+CAT -> CAT : idCategoria = setIdCategoria()
+
+RC -> RC : validaCategoriaTarefa(oCatTarefa)
+deactivate RC
+deactivate CTRL
+
+UI -> CTRL : registaCategoriaTarefa()
+
+activate CTRL
+CTRL -> RC : registaCategoriaTarefa(categoriaTarefa)
+activate RC
+
+RC -> RC : validaCategoriaTarefa(oCatTarefa)
+RC -> RC : addCategoriaTarefa(oCatTarefa)
+deactivate RC
+deactivate CTRL
+
+
+UI --> Admin : Informa operação bem sucedida
+
+deactivate UI
+deactivate Admin
+
+@enduml

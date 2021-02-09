@@ -1,0 +1,54 @@
+@startuml
+autonumber
+actor "Administrativo" as ADM
+
+participant ":DefinirAreaUI" as UI
+participant ":DefinirAreaController" as CTRL
+participant ":Plataforma" as PLAT
+participant "rat: Registo\nAreasAtividade" as REG_AT
+participant "area:AreaAtividade" as AREA
+
+activate ADM
+ADM -> UI : nova área de atividade
+activate UI
+UI --> ADM : solicita dados \n(código, descrição breve e detalhada)
+deactivate UI
+
+ADM -> UI : introduz os dados solicitados
+activate UI
+UI -> CTRL : novaAreaAtividade(cod, dsBreve, dsDet)
+activate CTRL
+CTRL -> PLAT: rat = getRegistoAreasAtividade()
+activate PLAT
+deactivate PLAT
+CTRL -> REG_AT: area=novaAreaAtividade(cod, dsBreve, dsDet)
+activate REG_AT
+REG_AT --> AREA ** : create(cod, dsBreve,dsDet)
+deactivate REG_AT
+
+CTRL -> REG_AT: validaAreaAtividade(area)
+activate REG_AT
+deactivate REG_AT
+
+deactivate CTRL
+UI --> ADM : apresenta dados e solicita confirmação
+deactivate UI
+
+ADM -> UI : confirma
+activate UI
+
+UI -> CTRL: registaAreaAtividade()
+activate CTRL
+CTRL ->REG_AT: registaAreaAtivadade(area)
+activate REG_AT
+REG_AT -> REG_AT: validaAreaAtividade(area)
+REG_AT -> REG_AT: addAreaAtividade(area)
+
+deactivate REG_AT
+deactivate CTRL
+
+UI --> ADM : operação bem sucedida
+deactivate UI
+
+deactivate ADM
+@enduml

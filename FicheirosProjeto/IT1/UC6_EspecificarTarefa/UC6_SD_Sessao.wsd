@@ -1,0 +1,23 @@
+@startuml
+title Sessao email
+
+participant "s: Sessao" as Sessao
+participant "sessao: UsersAPIAdapter" as SU
+participant "UsersAPI" as GU
+
+
+[o-> Sessao : org = getOrganizacaoByEmailUtilizador()
+activate Sessao
+
+Sessao -> SU : sessao = getSession()
+activate SU
+deactivate SU
+
+Sessao -> GU : email = getEmail()
+activate GU
+deactivate GU
+
+
+deactivate Sessao
+
+@enduml

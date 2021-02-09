@@ -1,0 +1,28 @@
+@startuml
+autonumber
+actor "Administrativo" as A
+
+activate A
+A -> ":Sistema" : inicia a especificação de uma competência técnica
+activate ":Sistema"
+":Sistema" --> A : solicita os dados (id, área de atividade, descrição breve e detalhada)
+deactivate ":Sistema"
+
+A -> ":Sistema" : introduz os dados solicitados
+activate ":Sistema"
+":Sistema" --> A : mostra a lista de áreas de atividade e pede ao administrativo para selecionar uma.
+deactivate ":Sistema"
+
+A -> ":Sistema" : seleciona uma área de atividade.
+activate ":Sistema"
+":Sistema" --> A : apresenta os dados e pede confirmação
+deactivate ":Sistema"
+
+A -> ":Sistema" : confirma os dados
+activate ":Sistema"
+":Sistema" --> A : informa do sucesso da operação
+deactivate ":Sistema"
+
+deactivate A
+
+@enduml

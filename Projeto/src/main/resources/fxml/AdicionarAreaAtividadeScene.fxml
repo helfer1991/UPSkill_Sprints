@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="251.0" prefWidth="429.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.company.ui.AdicionarAreaAtividadeUI">
+   <top>
+      <GridPane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="208.0" prefWidth="367.0" BorderPane.alignment="CENTER">
+        <columnConstraints>
+          <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="64.0" minHeight="10.0" prefHeight="42.0" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="96.0" minHeight="10.0" prefHeight="96.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <Label text="Codigo Unico :   " />
+            <TextField fx:id="txtCodUnico" maxHeight="-Infinity" maxWidth="-Infinity" onKeyPressed="#actionLimitTxtCodUnico" prefHeight="25.0" prefWidth="172.0" GridPane.columnIndex="1" />
+            <Label text="Descrição Breve :  " GridPane.rowIndex="1" />
+            <Label prefHeight="58.0" prefWidth="118.0" text="Descrição Detalhada : " GridPane.rowIndex="2" GridPane.valignment="TOP" />
+            <TextField fx:id="txtDescBreve" maxHeight="-Infinity" maxWidth="-Infinity" onKeyPressed="#actionLimitTxtDescBreve" prefHeight="25.0" prefWidth="174.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <TextArea fx:id="txtDescDetalhada" maxHeight="-Infinity" maxWidth="-Infinity" onKeyPressed="#actionLimitTxtDescDetalhada" prefHeight="75.0" prefWidth="178.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+         </children>
+      </GridPane>
+   </top>
+   <bottom>
+      <FlowPane alignment="CENTER_RIGHT" columnHalignment="RIGHT" prefHeight="49.0" prefWidth="416.0" rowValignment="BASELINE" BorderPane.alignment="CENTER">
+         <children>
+            <Button fx:id="btnAdicionarNovaAreaTarefa" defaultButton="true" mnemonicParsing="false" onAction="#actionAdicionarNovaAreaTarefa" text="Adicionar Nova Area de Atividade">
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
+               <FlowPane.margin>
+                  <Insets right="10.0" />
+               </FlowPane.margin>
+            </Button>
+            <Button fx:id="btnCancel" alignment="CENTER" cancelButton="true" mnemonicParsing="false" onAction="#actionCancel" text="Cancelar">
+               <FlowPane.margin>
+                  <Insets right="3.0" />
+               </FlowPane.margin>
+            </Button>
+         </children>
+      </FlowPane>
+   </bottom>
+</BorderPane>

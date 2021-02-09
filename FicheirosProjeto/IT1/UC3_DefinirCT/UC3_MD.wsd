@@ -1,0 +1,36 @@
+@startuml
+left to right direction
+class Plataforma {
+    -String designacao
+}
+
+class AreaAtividade {
+    -String codigo
+    -String descBreve
+    -String descDetalhada
+}
+
+class CompetenciaTecnica {
+    -String codigo
+    -String descBreve
+    -String descDetalhada
+}
+
+class Categoria {
+    -String id
+    -String descricao
+}
+
+class CategoriaCT{
+    -Boolean obrigatoria
+}
+
+    Plataforma "1" -- "*" AreaAtividade: possui >
+    Plataforma "1" -- "*" CompetenciaTecnica: possui >
+    Plataforma "1" -- "*" Categoria: possui >
+    Categoria "*" -- "1" AreaAtividade: enquadra-se em >
+    Categoria "*" -- "*" CompetenciaTecnica: requer >
+    (Categoria , CompetenciaTecnica) . CategoriaCT
+    CompetenciaTecnica "*" -- "1" AreaAtividade: referente a >
+    
+@enduml
